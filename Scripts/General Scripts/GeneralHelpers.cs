@@ -22,7 +22,10 @@ public static class GeneralHelpers {
 	}
 
 	public static bool GetMovementSwtichKeyPressed() {
-		return (Input.GetKeyDown(KeyCode.LeftShift));
+		return (
+            Input.GetKey(KeyCode.LeftShift) ||
+            Input.GetKey(KeyCode.RightShift)
+        );
 	}
 
 }

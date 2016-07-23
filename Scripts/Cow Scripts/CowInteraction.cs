@@ -28,7 +28,19 @@ public class CowInteraction : CowState {
 	CowInteraction()
     {
 		Global.CowInteraction = this;
+		GeneralEventManager.CowHasBeenSeen += HasBeenSeen;
     }
+
+	private void HasBeenSeen()
+	{
+		if (hasClothes) 
+		{
+			hasClothes = false;
+			SetCowState (StateOfCow.FOUR_LEGS);
+			SetCowModel ();
+			Debug.Log ("Cow has been seen! Losing clothes!");
+		}
+	}
 
 	public void Start()
 	{
@@ -41,6 +53,7 @@ public class CowInteraction : CowState {
     {
 		Move(GeneralHelpers.GetMovementKeysPressed());
 		Rotate (GeneralHelpers.GetMouseMoved ());
+        SetMoveState(GeneralHelpers.GetMovementSwtichKeyPressed());
 		ToggleState(GeneralHelpers.GetStateSwitchKeyPressed());
 		IncreaseFatigue();
 		SetCowModel();
@@ -48,6 +61,13 @@ public class CowInteraction : CowState {
 
 	public bool GetIsMooving() {
 		return isMooving;
+	}
+	
+
+
+	public Vector3 GetPosition()
+	{
+		return transform.position;
 	}
 
 	/// <summary>
@@ -87,6 +107,16 @@ public class CowInteraction : CowState {
 		SetCowState(newState);
 		SetCowModel();
 	}
+
+    public bool CanBeSeen()
+    {
+        if (GetCowState() == CowState.StateOfCow.FOUR_LEGS)
+            return true;
+        else if (!hasClothes)
+            return true;
+
+        return false;
+    }
 
 	/// <summary>
 	/// Checks if our cow is allowed to stand.
@@ -138,10 +168,13 @@ public class CowInteraction : CowState {
         Vector3 movementSpeed =
 			GetCowState() == StateOfCow.FOUR_LEGS ? _direction * FOUR_LEGS_SPEED :
 			GetCowState() == StateOfCow.TWO_LEGS ? _direction * TWO_LEGS_SPEED :
-			GetMovementState() == MovementState.RUNNING ? _direction * RUNNING_SPEED :
-
 			Vector3.zero; // shouldn't happen...
-		isMooving = movementSpeed != Vector3.zero;
+
+        movementSpeed = 
+            GetMovementState() == MovementState.RUNNING ? _direction * RUNNING_SPEED :
+            movementSpeed;
+
+        //Debug.Log(string.Format("Movement speed {0}", movementSpeed));
 
 		transform.Translate(movementSpeed * Time.deltaTime);
     }

@@ -7,8 +7,17 @@ public static class GeneralHelpers {
 	{
 		return (Vector3.right * Input.GetAxis(Global.InputAxis.HORIZONTAL)) + (Vector3.forward * Input.GetAxis(Global.InputAxis.VERTICAL));
 	}
+    public static float GetRawHorizontal()
+    {
+        return (Input.GetAxis(Global.InputAxis.HORIZONTAL));
+    }
+    public static float GetRawVertical()
+    {
+        return (Input.GetAxis(Global.InputAxis.VERTICAL));
+    }
 
-	public static Vector3 GetMouseMoved()
+
+    public static Vector3 GetMouseMoved()
 	{
 		return (Vector3.up * Input.GetAxis (Global.InputAxis.MOUSE_X)) + (Vector3.right * -Input.GetAxis (Global.InputAxis.MOUSE_Y));
 	}

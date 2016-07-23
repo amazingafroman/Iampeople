@@ -11,13 +11,19 @@ public class CowInteraction : CowState {
 	private GameObject twoLegs;
 	[SerializeField]
 	private GameObject fourLegs;
-	private Camera cowCam;
+    //private Camera cowCam;
 
-	private GameObject TWO_LEGS_MODEL;
+    private Transform m_Cam;                  // A reference to the main camera in the scenes transform
+    private Vector3 m_CamForward;             // The current forward direction of the camera
+    private Vector3 m_Move;
+    float m_TurnAmount;
+  
+    private GameObject TWO_LEGS_MODEL;
 
 	private bool hasClothes = false;
 	private bool isMooving = false;
-	/// <summary>
+	
+    /// <summary>
 	/// Allows us to set whether the cow is wearing clothes or not
 	/// </summary>
 	public void NowHasClothes (bool hasClothes)
@@ -46,13 +52,13 @@ public class CowInteraction : CowState {
 	{
 		SetCowState(StateOfCow.FOUR_LEGS);
 		SetCowModel();
-		cowCam = transform.GetComponentInChildren<Camera>();
-	}
+        m_Cam = Camera.main.transform;
+    }
 
     public void Update()
     {
-		Move(GeneralHelpers.GetMovementKeysPressed());
-		Rotate (GeneralHelpers.GetMouseMoved());
+        Move(GeneralHelpers.GetMovementKeysPressed());
+        CalculateRotate();
         SetMoveState(GeneralHelpers.GetMovementSwtichKeyPressed());
 		ToggleState(GeneralHelpers.GetStateSwitchKeyPressed());
 		IncreaseFatigue();
@@ -126,61 +132,65 @@ public class CowInteraction : CowState {
 			hasClothes;
 	}
 
-	/// <summary>
-	/// Rotates the cow along the Y axis and tilts our camera along the X axis
-	/// </summary>
-	private void Rotate(Vector3 rotation)
-	{
-		if (isMooving) {
-			Vector3 rotateCow = Vector3.up * rotation.y;
-			transform.Rotate (rotateCow);
-		}
-		//Vector3 tiltCamera = Vector3.right * rotation.x;
-		//cowCam.transform.Rotate (tiltCamera);
-		//ClampCameraTilt ();
-	}
+	
+    /// <summary>
+    /// This is just here so that we get some nice turning going on with the camera script
+    /// </summary>
+    private void CalculateRotate()
+    {
+        // TODO: see if we can still allow the player to run backwards
 
-	/// <summary>
-	/// Clamps the camera tilt between a MAX and a MIN value
-	/// </summary>
-	private void ClampCameraTilt()
-	{
-		Vector3 clampedRotation = cowCam.transform.localEulerAngles;
+        float h = GeneralHelpers.GetRawHorizontal();
+        float v = GeneralHelpers.GetRawVertical();
 
-		float xVal = clampedRotation.x;
+        if (m_Cam != null)
+        {
+            // calculate camera relative direction to move:
+            m_CamForward = Vector3.Scale(m_Cam.forward, new Vector3(1, 0, 1)).normalized;
+            m_Move = v * m_CamForward + h * m_Cam.right;
+        }
+        else
+        {
+            // we use world-relative directions in the case of no main camera
+            m_Move = v * Vector3.forward + h * Vector3.right;
+        }
 
-		if (xVal < 180)
-			xVal = Mathf.Clamp (xVal, 0, 26);
-		else if (xVal > 180)
-			xVal = Mathf.Clamp (xVal, 350, 360);
+        if (m_Move.magnitude > 1f)
+            m_Move.Normalize();
+        Vector3 move = transform.InverseTransformDirection(m_Move);
+        //move = Vector3.ProjectOnPlane(move, Vector3.up);
+        m_TurnAmount = Mathf.Atan2(move.x, move.z);
+     
+        float turnSpeed = 360;
+        transform.Rotate(0, m_TurnAmount * turnSpeed * Time.deltaTime, 0);
+        //Move(m_Move);
+    }
 
-		clampedRotation.x = xVal;
-		cowCam.transform.localEulerAngles = clampedRotation;
-	}
-
-	/// <summary>
-	/// Moves out cow based on our input
-	/// </summary>
+    /// <summary>
+    /// Moves out cow based on our input
+    /// </summary>
     private void Move(Vector3 _direction)
     {
-        if (!isMooving && _direction != Vector3.zero)
-        {
-            Vector3 snapToCamRotation = transform.eulerAngles;
-            snapToCamRotation.y = Global.CameraManager.transform.eulerAngles.y;
-            transform.eulerAngles = snapToCamRotation;
-        }
-            //_direction.y = Global.CameraManager.transform.eulerAngles.y;
-
         Vector3 movementSpeed =
-			GetCowState() == StateOfCow.FOUR_LEGS ? _direction * FOUR_LEGS_SPEED :
-			GetCowState() == StateOfCow.TWO_LEGS ? _direction * TWO_LEGS_SPEED :
-			Vector3.zero; // shouldn't happen...
+            GetCowState() == StateOfCow.FOUR_LEGS ? _direction * FOUR_LEGS_SPEED :
+            GetCowState() == StateOfCow.TWO_LEGS ? _direction * TWO_LEGS_SPEED :
+            Vector3.zero; // shouldn't happen...
 
-        movementSpeed = 
+        movementSpeed =
             GetMovementState() == MovementState.RUNNING ? _direction * RUNNING_SPEED :
             movementSpeed;
 
         isMooving = movementSpeed != Vector3.zero;
+
+
+        if(movementSpeed.z == 0)
+        {
+            movementSpeed.z = movementSpeed.x;
+            movementSpeed.x = 0;
+        }
+        movementSpeed.z = Mathf.Abs(movementSpeed.z);
+
+        //movementSpeed.x = Mathf.Abs(movementSpeed.x);
 
         transform.Translate(movementSpeed * Time.deltaTime);
     }

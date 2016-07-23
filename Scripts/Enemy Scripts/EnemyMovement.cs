@@ -36,7 +36,60 @@ public class EnemyMovement : MonoBehaviour {
 
         if (Vector3.Equals(transform.position, _targetLocation))
             thisDetection.WeHaveReachedTarget();
-            
     }
+
+
+    // start loop
+    // find new angle
+    // move until it reaches the angle
+    // start again?
+    public bool running = false;
+    public IEnumerator RotateToNewDir(float timer)
+    {
+        running = true;
+        Debug.Log("Timer " + timer);
+        yield return new WaitForSeconds(timer);
+
+        float difference = Random.Range(-40f, 40f);
+        difference = difference < 0 ? Mathf.Clamp(difference, -40f, -20f) :
+            Mathf.Clamp(difference, 20f, 40f);
+
+        Debug.Log("difference " + difference);
+
+        Vector3 newAngle = transform.eulerAngles;
+        newAngle.y += difference;
+
+        Debug.Log("New target angle " + newAngle.y);
+
+        newAngle.y = 
+            newAngle.y < 0 ? 360 - Mathf.Abs(newAngle.y) : 
+            newAngle.y > 360 ? newAngle.y - 360 :
+            newAngle.y;
+
+        Debug.Log("New target angle " + newAngle.y);
+
+        while (!Mathf.Approximately(transform.eulerAngles.y, newAngle.y))
+        {
+            Vector3 fuckingShhhhhh = transform.eulerAngles;
+            fuckingShhhhhh.y = Mathf.MoveTowards(fuckingShhhhhh.y, newAngle.y, TURN_SPEED * Time.deltaTime);
+            transform.eulerAngles = fuckingShhhhhh;
+            yield return new WaitForEndOfFrame();
+        }
+
+        thisDetection.co = RotateToNewDir(Random.Range(4f,8f));
+        StartCoroutine(thisDetection.co);
+        yield return null;
+    }
+
+    //public void RotateToNewDir(Vector3 _newAngle)
+    //{
+    //    //Vector3 normalizedDir = _newAngle.normalized;
+    //    //Quaternion _lookRotation = Quaternion.LookRotation(normalizedDir);
+    //    Quaternion _rotationAngle = Quaternion.Euler(_newAngle);
+    //    transform.rotation = Quaternion.RotateTowards(transform.rotation, _rotationAngle, Time.deltaTime * TURN_SPEED);
+
+    //    if (transform.eulerAngles.Equals(_newAngle))
+    //        this.thisDetection.FinishedTurning();
+    //}
 
 }

@@ -28,11 +28,16 @@ public class PlayerDetection : MonoBehaviour {
     private Vector3 localLastPlayerSighting;
     private Vector3 nextPointToGoTo;
 
+    private bool isRandomTurning = false;
+    private float turnDelay = 0;
+
+    public IEnumerator co;
+
     private float detectionSize;
     private float lookingDelay = 0;
     //private bool targetReached = true;
 
-    private List<KeyValuePair<Vector3, float>> waypointList = new List<KeyValuePair<Vector3, float>>();
+    private List<GameObject> waypointList = new List<GameObject>();
 
 
 	PlayerDetection()
@@ -46,49 +51,32 @@ public class PlayerDetection : MonoBehaviour {
         detectionSize = detectionCol.radius;
         thisEnemy = transform.root.GetComponent<EnemyMovement>();
         ORIGINAL_WAYPOINT = thisEnemy.transform.position;
-	}
+        nextPointToGoTo = ORIGINAL_WAYPOINT;
+        co = thisEnemy.RotateToNewDir(4);
+    }
 
 
     void SetNewWaypointPosition()
     {
-        //List<Vector3> somethingSomethingList = new List<Vector3>(waypointList.Select(x => x.Key));
-        var orderedWaypoint =
-            from pair in waypointList
-            orderby Vector3.Distance(transform.position, pair.Key) ascending
-            select pair.Key;
+        // find the original waypoint position
+        // find any waypoint nodes that can be seen by the original position
+        // loop through those nodes, and their attached nodes until we find the butcher
 
+        //List<Vector3> waypointPositions = new List<Vector3>();
+        //Vector3 butcherPos = Vector3.zero;
+        //bool foundButcher = false;
+        //while(!foundButcher)
+        //{
 
-        // get the next waypoint in the reordered list
-        // or if the original waypoint is closer and not blocked go to that
-
-        Vector3 closestViableWaypoint = Vector3.zero;
-        RaycastHit hit;
-        for(int i = 0; i < orderedWaypoint.Count(); i++)
-        {
-            if (Physics.Raycast(transform.position, orderedWaypoint.ElementAt(i), out hit))
-            {
-                if (hit.collider == null)
-                {
-                    closestViableWaypoint = orderedWaypoint.ElementAt(i);
-                    waypointList.Remove(waypointList.First(x => x.Key.Equals(closestViableWaypoint)));
-                    break;
-                }
-            }
-        }
-
-        float nextDistance              = Vector3.Distance(transform.position, closestViableWaypoint);
-        float originalWaypointDistance  = Vector3.Distance(transform.position, ORIGINAL_WAYPOINT);
-        bool shouldBeAllG = true;
-        if (Physics.Raycast(transform.position, ORIGINAL_WAYPOINT, out hit))
-            shouldBeAllG = (hit.collider == null);
-
-        nextPointToGoTo = nextDistance < originalWaypointDistance ? closestViableWaypoint :
-            shouldBeAllG ? ORIGINAL_WAYPOINT :
-            closestViableWaypoint;
+        //}
 
     }
 
-
+    public void FinishedTurning()
+    {
+        isRandomTurning = false;
+        Debug.Log("finished out turning");
+    }
 
     // once the butcher has reached the last known position we have a cool down that makes them wait
     // once the timer has finshed we want to reset the radius of the viewable area
@@ -96,7 +84,7 @@ public class PlayerDetection : MonoBehaviour {
 
     public void WeHaveReachedTarget()
     {
-        Debug.Log(string.Format("We have reached target and have {0} waypoints to go to", waypointList.Count));
+        //Debug.Log(string.Format("We have reached target and have {0} waypoints to go to", waypointList.Count));
 
         SetNewWaypointPosition();
 
@@ -110,13 +98,25 @@ public class PlayerDetection : MonoBehaviour {
             waypointList.Clear();
         }
 
+        Debug.Log("Butcher state " + butcherState);
+
 
         //lookingDelay = MAX_LOOKING_DELAY;
     }
 
 	void OnTriggerStay(Collider col)
 	{
-		if (col.transform.root.tag == Global.ObjectTags.PLAYER) 
+        Debug.Log("Object tag " + col.tag);
+        if (col.tag == Global.ObjectTags.WAYPOINT)
+        {
+            GameObject waypointCol = col.gameObject;
+            if (!waypointList.Contains(waypointCol))
+            {
+                waypointList.Add(waypointCol);
+                Debug.Log("New waypoint added");
+            }
+        }
+        if (col.transform.root.tag == Global.ObjectTags.PLAYER) 
 		{
 			isPlayerVisible = false;
 
@@ -151,8 +151,8 @@ public class PlayerDetection : MonoBehaviour {
 
                             if (butcherState == ButcherState.STATIONAIRY)
                             {
-                                waypointList = new List<KeyValuePair<Vector3, float>>();
-                                waypointList.Add(new KeyValuePair<Vector3, float>(transform.position, transform.eulerAngles.y));
+                                //waypointList = new List<KeyValuePair<Vector3, float>>();
+                                //waypointList.Add(new KeyValuePair<Vector3, float>(transform.position, transform.eulerAngles.y));
                             }
 
                             butcherState = ButcherState.CHASING_COW;
@@ -163,15 +163,21 @@ public class PlayerDetection : MonoBehaviour {
 				}
 			}
 		}
+      
 	}
 
 	void Update()
 	{
+
+        // will look around or something
         if (lookingDelay > 0)
+        {
             lookingDelay -= Time.deltaTime;
+        }
 
-        // we also want to add a position if our old position went invisible or something
+        #region OLD CODE
 
+        /*
         // if our current angle is more than x difference from our last angle then we will add another point to our list
         float angle = transform.eulerAngles.y;
         if (waypointList.Count != 0)
@@ -191,17 +197,22 @@ public class PlayerDetection : MonoBehaviour {
                 }
             }
         }
+        */
+        #endregion
 
+        // if we are in the right state we will turn around after a little while
+        // set a delay time
+        // once delay runs down generate a new target angle
+        // pass the angle to the movement
+        // don't enter the loop until the turn has finished
 
-
-        // if isPlayerVisible == true then we want to move towards the cow
-        // move to the last known location of the cow
-        // will continue to move to the last known location of the cow until it gets there
-
-        // stay at that location for a bit, then head back to the waypoint location
-
+        //if (butcherState != ButcherState.STATIONAIRY)
+        //    StopCoroutine(co);
+        //this.thisEnemy.running = false;
         if (butcherState == ButcherState.STATIONAIRY)
         {
+            //if (!thisEnemy.running)
+            //    StartCoroutine(co);
             // do some random rotating stuff here
         }
         else if(butcherState == ButcherState.CHASING_COW)
@@ -219,7 +230,6 @@ public class PlayerDetection : MonoBehaviour {
             //Vector3 positionToGoTo = nextPointToGoTo;
             thisEnemy.MoveTowardsLocation(nextPointToGoTo, false);
         }
-
 
     }
 

@@ -7,6 +7,7 @@ public static class Global {
 	//public static PlayerDetection PlayerDetection;
 	public static FatigueTimer FatigueTimer;
     public static CameraManager CameraManager;
+    public static WaypointList WaypointList;
     //public static EnemyMovement EnemyMovement;
 
 	static Global()
@@ -23,6 +24,7 @@ public static class Global {
 		public const string DISGUISE = "Disguise";
 		public const string ENEMY = "Enemy";
 		public const string PLAYER = "TotallyAPeople";
+        public const string WAYPOINT = "Waypoints";
 	}
 
 	public static class InputAxis

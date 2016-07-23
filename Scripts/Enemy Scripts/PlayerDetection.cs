@@ -84,5 +84,6 @@ public class PlayerDetection : MonoBehaviour {
             thisEnemy.MoveTowardsLocation(localLastPlayerSighting, false);
         }
 
+	}
 
 }

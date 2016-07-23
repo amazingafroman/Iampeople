@@ -5,7 +5,6 @@ public class CowInteraction : CowState {
 
 	private const float TWO_LEGS_SPEED = 3;
 	private const float FOUR_LEGS_SPEED = 5;
-	private const float RUNNING_SPEED = 7;
 
 	[SerializeField]
 	private GameObject twoLegs;
@@ -28,19 +27,7 @@ public class CowInteraction : CowState {
 	CowInteraction()
     {
 		Global.CowInteraction = this;
-		GeneralEventManager.CowHasBeenSeen += HasBeenSeen;
     }
-
-	private void HasBeenSeen()
-	{
-		if (hasClothes) 
-		{
-			hasClothes = false;
-			SetCowState (StateOfCow.FOUR_LEGS);
-			SetCowModel ();
-			Debug.Log ("Cow has been seen! Losing clothes!");
-		}
-	}
 
 	public void Start()
 	{
@@ -57,11 +44,6 @@ public class CowInteraction : CowState {
 		IncreaseFatigue();
 		SetCowModel();
     }
-
-	public Vector3 GetPosition()
-	{
-		return transform.position;
-	}
 
 	/// <summary>
 	/// Sets our cows model to either twoLegs or fourLegs based on the state of the cow
@@ -149,9 +131,7 @@ public class CowInteraction : CowState {
         Vector3 movementSpeed =
 			GetCowState() == StateOfCow.FOUR_LEGS ? _direction * FOUR_LEGS_SPEED :
 			GetCowState() == StateOfCow.TWO_LEGS ? _direction * TWO_LEGS_SPEED :
-			GetMovementState() == MovementState.RUNNING ? _direction * RUNNING_SPEED :
-
-			Vector3.zero; // shouldn't happen...
+            Vector3.zero; // shouldn't happen..
 
 		transform.Translate(movementSpeed * Time.deltaTime);
     }

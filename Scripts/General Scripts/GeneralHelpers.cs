@@ -21,4 +21,8 @@ public static class GeneralHelpers {
 		);
 	}
 
+	public static bool GetMovementSwtichKeyPressed() {
+		return (Input.GetKeyDown(KeyCode.LeftShift));
+	}
+
 }

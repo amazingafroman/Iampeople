@@ -5,6 +5,7 @@ public class CowInteraction : CowState {
 
 	private const float TWO_LEGS_SPEED = 3;
 	private const float FOUR_LEGS_SPEED = 5;
+	private const float RUNNING_SPEED = 7;
 
 	[SerializeField]
 	private GameObject twoLegs;
@@ -148,7 +149,9 @@ public class CowInteraction : CowState {
         Vector3 movementSpeed =
 			GetCowState() == StateOfCow.FOUR_LEGS ? _direction * FOUR_LEGS_SPEED :
 			GetCowState() == StateOfCow.TWO_LEGS ? _direction * TWO_LEGS_SPEED :
-            Vector3.zero; // shouldn't happen..
+			GetMovementState() == MovementState.RUNNING ? _direction * RUNNING_SPEED :
+
+			Vector3.zero; // shouldn't happen...
 
 		transform.Translate(movementSpeed * Time.deltaTime);
     }

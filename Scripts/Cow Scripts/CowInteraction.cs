@@ -68,6 +68,13 @@ public class CowInteraction : CowState {
 		return isMooving;
 >>>>>>> origin/master
 	}
+	
+
+
+	public Vector3 GetPosition()
+	{
+		return transform.position;
+	}
 
 	/// <summary>
 	/// Sets our cows model to either twoLegs or fourLegs based on the state of the cow
@@ -168,7 +175,12 @@ public class CowInteraction : CowState {
 			GetCowState() == StateOfCow.FOUR_LEGS ? _direction * FOUR_LEGS_SPEED :
 			GetCowState() == StateOfCow.TWO_LEGS ? _direction * TWO_LEGS_SPEED :
 			Vector3.zero; // shouldn't happen...
-		isMooving = movementSpeed != Vector3.zero;
+
+        movementSpeed = 
+            GetMovementState() == MovementState.RUNNING ? _direction * RUNNING_SPEED :
+            movementSpeed;
+
+        //Debug.Log(string.Format("Movement speed {0}", movementSpeed));
 
         movementSpeed = 
             GetMovementState() == MovementState.RUNNING ? _direction * RUNNING_SPEED :

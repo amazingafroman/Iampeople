@@ -6,6 +6,7 @@ public static class Global {
 	public static CowInteraction CowInteraction;
 	public static PlayerDetection PlayerDetection;
 	public static FatigueTimer FatigueTimer;
+    //public static EnemyMovement EnemyMovement;
 
 	static Global()
 	{

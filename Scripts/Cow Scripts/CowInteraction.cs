@@ -16,7 +16,7 @@ public class CowInteraction : CowState {
 	private GameObject TWO_LEGS_MODEL;
 
 	private bool hasClothes = false;
-
+	private bool isMooving = false;
 	/// <summary>
 	/// Allows us to set whether the cow is wearing clothes or not
 	/// </summary>
@@ -28,19 +28,7 @@ public class CowInteraction : CowState {
 	CowInteraction()
     {
 		Global.CowInteraction = this;
-		GeneralEventManager.CowHasBeenSeen += HasBeenSeen;
     }
-
-	private void HasBeenSeen()
-	{
-		if (hasClothes) 
-		{
-			hasClothes = false;
-			SetCowState (StateOfCow.FOUR_LEGS);
-			SetCowModel ();
-			Debug.Log ("Cow has been seen! Losing clothes!");
-		}
-	}
 
 	public void Start()
 	{
@@ -58,9 +46,8 @@ public class CowInteraction : CowState {
 		SetCowModel();
     }
 
-	public Vector3 GetPosition()
-	{
-		return transform.position;
+	public bool GetIsMooving() {
+		return isMooving;
 	}
 
 	/// <summary>
@@ -116,11 +103,13 @@ public class CowInteraction : CowState {
 	/// </summary>
 	private void Rotate(Vector3 rotation)
 	{
-		Vector3 rotateCow = Vector3.up * rotation.y;
-		Vector3 tiltCamera = Vector3.right * rotation.x;
-		transform.Rotate (rotateCow);
-		cowCam.transform.Rotate (tiltCamera);
-		ClampCameraTilt ();
+		if (isMooving) {
+			Vector3 rotateCow = Vector3.up * rotation.y;
+			transform.Rotate (rotateCow);
+		}
+		//Vector3 tiltCamera = Vector3.right * rotation.x;
+		//cowCam.transform.Rotate (tiltCamera);
+		//ClampCameraTilt ();
 	}
 
 	/// <summary>
@@ -152,6 +141,7 @@ public class CowInteraction : CowState {
 			GetMovementState() == MovementState.RUNNING ? _direction * RUNNING_SPEED :
 
 			Vector3.zero; // shouldn't happen...
+		isMooving = movementSpeed != Vector3.zero;
 
 		transform.Translate(movementSpeed * Time.deltaTime);
     }

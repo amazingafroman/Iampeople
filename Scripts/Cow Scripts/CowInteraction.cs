@@ -59,14 +59,9 @@ public class CowInteraction : CowState {
 		SetCowModel();
     }
 
-<<<<<<< HEAD
-	public Vector3 GetPosition()
-	{
-		return transform.position;
-=======
+
 	public bool GetIsMooving() {
 		return isMooving;
->>>>>>> origin/master
 	}
 
 	/// <summary>

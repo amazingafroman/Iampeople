@@ -52,7 +52,7 @@ public class CowInteraction : CowState {
     public void Update()
     {
 		Move(GeneralHelpers.GetMovementKeysPressed());
-		Rotate (GeneralHelpers.GetMouseMoved ());
+		Rotate (GeneralHelpers.GetMouseMoved());
         SetMoveState(GeneralHelpers.GetMovementSwtichKeyPressed());
 		ToggleState(GeneralHelpers.GetStateSwitchKeyPressed());
 		IncreaseFatigue();
@@ -62,8 +62,6 @@ public class CowInteraction : CowState {
 	public bool GetIsMooving() {
 		return isMooving;
 	}
-	
-
 
 	public Vector3 GetPosition()
 	{
@@ -165,6 +163,14 @@ public class CowInteraction : CowState {
 	/// </summary>
     private void Move(Vector3 _direction)
     {
+        if (!isMooving && _direction != Vector3.zero)
+        {
+            Vector3 snapToCamRotation = transform.eulerAngles;
+            snapToCamRotation.y = Global.CameraManager.transform.eulerAngles.y;
+            transform.eulerAngles = snapToCamRotation;
+        }
+            //_direction.y = Global.CameraManager.transform.eulerAngles.y;
+
         Vector3 movementSpeed =
 			GetCowState() == StateOfCow.FOUR_LEGS ? _direction * FOUR_LEGS_SPEED :
 			GetCowState() == StateOfCow.TWO_LEGS ? _direction * TWO_LEGS_SPEED :
@@ -174,9 +180,9 @@ public class CowInteraction : CowState {
             GetMovementState() == MovementState.RUNNING ? _direction * RUNNING_SPEED :
             movementSpeed;
 
-        //Debug.Log(string.Format("Movement speed {0}", movementSpeed));
+        isMooving = movementSpeed != Vector3.zero;
 
-		transform.Translate(movementSpeed * Time.deltaTime);
+        transform.Translate(movementSpeed * Time.deltaTime);
     }
 
 }

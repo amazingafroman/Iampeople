@@ -52,13 +52,6 @@ public class PlayerDetection : MonoBehaviour {
 				{
 					if (hit.collider.transform.root.tag == Global.ObjectTags.PLAYER) 
 					{
-<<<<<<< HEAD
-						Debug.Log ("Player has been hit!");
-                        if (Global.CowInteraction.CanBeSeen())
-                        {
-                            GeneralEventManager.EnemyHasSeenCow();
-                            isPlayerVisible = true;
-=======
                         Debug.Log("Player will be seen if not standing");
                         if (Global.CowInteraction.CanBeSeen())
                         {
@@ -66,7 +59,6 @@ public class PlayerDetection : MonoBehaviour {
                             GeneralEventManager.EnemyHasSeenCow();
                             isPlayerVisible = true;
                             localLastPlayerSighting = Global.CowInteraction.GetPosition();
->>>>>>> working_changes
                         }
 					}
 				}
@@ -92,5 +84,6 @@ public class PlayerDetection : MonoBehaviour {
             thisEnemy.MoveTowardsLocation(localLastPlayerSighting, false);
         }
 
+	}
 
 }

@@ -27,12 +27,13 @@ public abstract class CowState : MonoBehaviour {
 		return moveState;
 	}
 
-	public void SetMoveState (MovementState newMoveState){
-		moveState = newMoveState;
-		Debug.Log (string.Format("Cow move state set to {0}", moveState.ToString()));
-	}
+	public void SetMoveState (bool setRunning){
+		moveState = setRunning ? MovementState.RUNNING : MovementState.WALKING;
+        if(moveState == MovementState.RUNNING)
+            Debug.Log("Cow is running");
+    }
 
-	public void SetCowState(StateOfCow newState)
+    public void SetCowState(StateOfCow newState)
 	{
 		cowState = newState;
 		Debug.Log (string.Format("Cow state set to {0}", cowState.ToString()));

@@ -4,6 +4,7 @@ using System.Collections;
 public static class Global {
 
 	public static CowInteraction CowInteraction;
+	public static PlayerDetection PlayerDetection;
 	public static FatigueTimer FatigueTimer;
 
 	static Global()
@@ -18,6 +19,8 @@ public static class Global {
 	public static class ObjectTags
 	{
 		public const string DISGUISE = "Disguise";
+		public const string ENEMY = "Enemy";
+		public const string PLAYER = "TotallyAPeople";
 	}
 
 	public static class InputAxis

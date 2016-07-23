@@ -37,8 +37,11 @@ public class PlayerDetection : MonoBehaviour {
 					if (hit.collider.transform.root.tag == Global.ObjectTags.PLAYER) 
 					{
 						Debug.Log ("Player has been hit!");
-						GeneralEventManager.EnemyHasSeenCow ();
-						isPlayerVisible = true;
+                        if (Global.CowInteraction.CanBeSeen())
+                        {
+                            GeneralEventManager.EnemyHasSeenCow();
+                            isPlayerVisible = true;
+                        }
 					}
 				}
 			}

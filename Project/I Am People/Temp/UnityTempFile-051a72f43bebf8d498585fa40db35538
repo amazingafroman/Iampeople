@@ -1,0 +1,123 @@
+-debug
+-target:library
+-nowarn:0169
+-out:Temp/Assembly-CSharp.dll
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEngine.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll"
+-r:"C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll"
+-r:"C:/Program Files/Unity/Editor/Data/Managed/UnityEditor.dll"
+-define:UNITY_5_3_OR_NEWER
+-define:UNITY_5_3_5
+-define:UNITY_5_3
+-define:UNITY_5
+-define:ENABLE_NEW_BUGREPORTER
+-define:ENABLE_AUDIO
+-define:ENABLE_CACHING
+-define:ENABLE_CLOTH
+-define:ENABLE_DUCK_TYPING
+-define:ENABLE_FRAME_DEBUGGER
+-define:ENABLE_GENERICS
+-define:ENABLE_HOME_SCREEN
+-define:ENABLE_IMAGEEFFECTS
+-define:ENABLE_LIGHT_PROBES_LEGACY
+-define:ENABLE_MICROPHONE
+-define:ENABLE_MULTIPLE_DISPLAYS
+-define:ENABLE_PHYSICS
+-define:ENABLE_PLUGIN_INSPECTOR
+-define:ENABLE_SHADOWS
+-define:ENABLE_SINGLE_INSTANCE_BUILD_SETTING
+-define:ENABLE_SPRITERENDERER_FLIPPING
+-define:ENABLE_SPRITES
+-define:ENABLE_SPRITE_POLYGON
+-define:ENABLE_TERRAIN
+-define:ENABLE_RAKNET
+-define:ENABLE_UNET
+-define:ENABLE_UNITYEVENTS
+-define:ENABLE_WEBCAM
+-define:ENABLE_WWW
+-define:ENABLE_CLOUD_SERVICES
+-define:ENABLE_CLOUD_SERVICES_ADS
+-define:ENABLE_CLOUD_HUB
+-define:ENABLE_CLOUD_PROJECT_ID
+-define:ENABLE_CLOUD_SERVICES_PURCHASING
+-define:ENABLE_CLOUD_SERVICES_ANALYTICS
+-define:ENABLE_CLOUD_SERVICES_UNET
+-define:ENABLE_CLOUD_SERVICES_BUILD
+-define:ENABLE_CLOUD_LICENSE
+-define:ENABLE_EDITOR_METRICS
+-define:ENABLE_EDITOR_METRICS_CACHING
+-define:INCLUDE_DYNAMIC_GI
+-define:INCLUDE_GI
+-define:INCLUDE_IL2CPP
+-define:INCLUDE_DIRECTX12
+-define:PLATFORM_SUPPORTS_MONO
+-define:RENDER_SOFTWARE_CURSOR
+-define:ENABLE_LOCALIZATION
+-define:ENABLE_ANDROID_ATLAS_ETC1_COMPRESSION
+-define:ENABLE_EDITOR_TESTS_RUNNER
+-define:UNITY_WEBPLAYER
+-define:ENABLE_SUBSTANCE
+-define:WEBPLUG
+-define:ENABLE_TEXTUREID_MAP
+-define:ENABLE_RUNTIME_GI
+-define:ENABLE_MOVIES
+-define:ENABLE_NETWORK
+-define:ENABLE_CRUNCH_TEXTURE_COMPRESSION
+-define:ENABLE_MONO
+-define:ENABLE_PROFILER
+-define:DEBUG
+-define:TRACE
+-define:UNITY_ASSERTIONS
+-define:UNITY_EDITOR
+-define:UNITY_EDITOR_64
+-define:UNITY_EDITOR_WIN
+-define:UNITY_TEAM_LICENSE
+-define:UNITY_PRO_LICENSE
+-define:CROSS_PLATFORM_INPUT
+Assets/3rdPersonCamera/DemoSceneDependencies/Scripts/BallController.cs
+Assets/3rdPersonCamera/DemoSceneDependencies/Scripts/CaretFix.cs
+Assets/3rdPersonCamera/DemoSceneDependencies/Scripts/Reset.cs
+Assets/3rdPersonCamera/DemoSceneDependencies/Scripts/SceneLoader.cs
+Assets/3rdPersonCamera/DemoSceneDependencies/Scripts/UIHandling.cs
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Characters/ThirdPersonCharacter/Scripts/AICharacterControl.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Characters/ThirdPersonCharacter/Scripts/ThirdPersonCharacter.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Characters/ThirdPersonCharacter/Scripts/ThirdPersonUserControl.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/CrossPlatformInput/Scripts/AxisTouchButton.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/CrossPlatformInput/Scripts/ButtonHandler.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/CrossPlatformInput/Scripts/CrossPlatformInputManager.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/CrossPlatformInput/Scripts/InputAxisScrollbar.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/CrossPlatformInput/Scripts/Joystick.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/CrossPlatformInput/Scripts/MobileControlRig.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/CrossPlatformInput/Scripts/PlatformSpecific/MobileInput.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/CrossPlatformInput/Scripts/PlatformSpecific/StandaloneInput.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/CrossPlatformInput/Scripts/TiltInput.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/CrossPlatformInput/Scripts/TouchPad.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/CrossPlatformInput/Scripts/VirtualInput.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Vehicles/Car/Scripts/BrakeLight.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Vehicles/Car/Scripts/CarAIControl.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Vehicles/Car/Scripts/CarAudio.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Vehicles/Car/Scripts/CarController.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Vehicles/Car/Scripts/CarSelfRighting.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Vehicles/Car/Scripts/CarUserControl.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Vehicles/Car/Scripts/Mudguard.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Vehicles/Car/Scripts/SkidTrail.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Vehicles/Car/Scripts/Suspension.cs"
+"Assets/3rdPersonCamera/DemoSceneDependencies/Standard Assets/Vehicles/Car/Scripts/WheelEffects.cs"
+Assets/3rdPersonCamera/Scripts/CameraController.cs
+Assets/3rdPersonCamera/Scripts/DisableFollow.cs
+Assets/3rdPersonCamera/Scripts/Follow.cs
+Assets/3rdPersonCamera/Scripts/FreeForm.cs
+Assets/3rdPersonCamera/Scripts/LockOnTarget.cs
+Assets/3rdPersonCamera/Scripts/Targetable.cs
+"Assets/Scripts/Cow Scripts/CameraManager.cs"
+"Assets/Scripts/Cow Scripts/CowInteraction.cs"
+"Assets/Scripts/Cow Scripts/CowState.cs"
+"Assets/Scripts/Cow Scripts/InteractWithDisguises.cs"
+"Assets/Scripts/Enemy Scripts/EnemyMovement.cs"
+"Assets/Scripts/Enemy Scripts/PlayerDetection.cs"
+"Assets/Scripts/General Scripts/GeneralHelpers.cs"
+"Assets/Scripts/General Scripts/StaticObject.cs"
+Assets/Scripts/ManagerScripts/GeneralEventManager.cs
+Assets/Scripts/ManagerScripts/Global.cs
+Assets/Scripts/ManagerScripts/StaticUpdater.cs
+Assets/Scripts/TimersAndShit/FatigueTimer.cs

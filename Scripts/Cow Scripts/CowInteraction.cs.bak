@@ -27,19 +27,7 @@ public class CowInteraction : CowState {
 	CowInteraction()
     {
 		Global.CowInteraction = this;
-		GeneralEventManager.CowHasBeenSeen += HasBeenSeen;
     }
-
-	private void HasBeenSeen()
-	{
-		if (hasClothes) 
-		{
-			hasClothes = false;
-			SetCowState (StateOfCow.FOUR_LEGS);
-			SetCowModel ();
-			Debug.Log ("Cow has been seen! Losing clothes!");
-		}
-	}
 
 	public void Start()
 	{
@@ -56,11 +44,6 @@ public class CowInteraction : CowState {
 		IncreaseFatigue();
 		SetCowModel();
     }
-
-	public Vector3 GetPosition()
-	{
-		return transform.position;
-	}
 
 	/// <summary>
 	/// Sets our cows model to either twoLegs or fourLegs based on the state of the cow

@@ -1,0 +1,21 @@
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Enemy Scripts\EnemyMovement.cs">
+    <Files>
+      <File FileName="Assets\Scripts\Enemy Scripts\EnemyMovement.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Enemy Scripts\PlayerDetection.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cow Scripts\CowInteraction.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ManagerScripts\Global.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cow Scripts\InteractWithDisguises.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\General Scripts\StaticObject.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\ManagerScripts\StaticUpdater.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\TimersAndShit\FatigueTimer.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cow Scripts\CowState.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\General Scripts\GeneralHelpers.cs" Line="1" Column="1" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+</Properties>
